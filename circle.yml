@@ -10,7 +10,7 @@ dependencies:
 
 test:
   pre:
-    - python -m SimpleHTTPServer 8000
+    - python -m http.server 8000
   override:
     - pytest selenium-browser.py
 

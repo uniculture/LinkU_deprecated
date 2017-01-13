@@ -10,8 +10,7 @@ dependencies:
 
 test:
   pre:
-    - python -m http.server 8000
-      background: true
+    - python -m http.server 8000 &
   override:
     - pytest selenium-browser.py
 

@@ -1,0 +1,14 @@
+machine:
+  python:
+    version: 3.6.0
+
+dependencies:
+  pre:
+    - pip install -r requirements.txt
+
+test:
+  pre:
+    - python -m SimpleHTTPServer 8000
+  override:
+    - pytest selenium-browser.py
+

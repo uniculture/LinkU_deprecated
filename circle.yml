@@ -7,10 +7,11 @@ machine:
 dependencies:
   pre:
     - pip install -r requirements.txt
-
+  post:
+    - wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar
+    - java -jar selenium-server-standalone-2.44.0.jar:
+        background: true
 test:
-  pre:
-    - python -m http.server 8000 &
   override:
     - pytest selenium-browser.py
 

@@ -8,9 +8,9 @@ def test_selenium():
     #driver = webdriver.Chrome('/usr/local/chromedriver')
     driver = webdriver.Firefox()
 
-    driver.get("http://localhost:4444/wd/hub")
+    driver.get("http://localhost:8000")
     
-    assert driver.title == 'WebDriver Hub'
+    assert driver.title == ''
     
     driver.close()
     #display.stop()

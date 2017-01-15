@@ -1,9 +1,9 @@
 from selenium import webdriver
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 
 def test_selenium():
-    display = Display(visible=0, size=(800, 600))
-    display.start()
+    #display = Display(visible=0, size=(800, 600))
+    #display.start()
 
     #driver = webdriver.Chrome('/usr/local/chromedriver')
     driver = webdriver.Firefox()
@@ -13,5 +13,5 @@ def test_selenium():
     assert driver.title == 'WebDriver Hub'
     
     driver.close()
-    display.stop()
+    #display.stop()
 

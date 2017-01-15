@@ -1,5 +1,4 @@
-EasyProcess==0.2.3
+Django==1.10.5
 py==1.4.32
 pytest==3.0.5
-PyVirtualDisplay==0.2.1
 selenium==2.53.6

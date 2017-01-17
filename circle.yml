@@ -12,5 +12,5 @@ dependencies:
         background: true 
 test:
   override:
-    - pytest selenium-browser.py
+    - pytest foodgroup/functional_tests/selenium-browser.py
 

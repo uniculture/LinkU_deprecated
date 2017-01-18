@@ -12,5 +12,7 @@ dependencies:
         background: true 
 test:
   override:
-    - pytest foodgroup/functional_tests/selenium-browser.py
+    - pytest --cov=./foodgroup/ foodgroup/functional_tests/selenium-browser.py
+  post:
+    - codecov
 

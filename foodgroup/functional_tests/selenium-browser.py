@@ -1,15 +1,8 @@
 from selenium import webdriver
-#from pyvirtualdisplay import Display
 
-def test_selenium():
 
-    #driver = webdriver.Chrome('/usr/local/chromedriver')
+def test_checking_prepared_environment_with_selenium():
     driver = webdriver.Firefox()
-
     driver.get("http://localhost:8000")
-    
-    assert driver.title == 'Directory listing for /'
-    
+    assert driver.title == 'Welcome to Django'
     driver.close()
-    #display.stop()
-

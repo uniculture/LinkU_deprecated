@@ -8,7 +8,7 @@ dependencies:
   pre:
     - pip install -r requirements.txt
   post:
-    - python -m http.server 8000:
+    - ./prepare_functionaltest.sh :
         background: true 
 test:
   override:

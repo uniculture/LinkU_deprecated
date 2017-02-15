@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-./foodgroup/manage.py migrate
-./foodgroup/manage.py runserver
+./linku/manage.py migrate
+./linku/manage.py runserver

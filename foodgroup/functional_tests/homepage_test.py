@@ -12,10 +12,10 @@ def test_checking_prepared_environment_with_selenium():
         download_chromedriver.download()
         chrome_path = download_chromedriver.get_chromedriver_path()
         if chrome_path is False:
-           raise SystemExit
+            raise SystemExit
         driver = webdriver.Chrome(chrome_path)
     else:
         driver = webdriver.Firefox()
     driver.get("http://localhost:8000")
-    assert driver.title == 'Welcome to Django'
+    assert '돈까스 모임' in driver.page_source
     driver.close()

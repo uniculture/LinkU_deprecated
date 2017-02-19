@@ -1,11 +1,15 @@
 import sys
 import os
 from selenium import webdriver
+import pytest
 
 
-def test_checking_prepared_environment_with_selenium():
+@pytest.fixture(scope="module")
+def browser():
+    print("loading browser")
     if sys.platform == 'darwin':
-        project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        project_root = os.path.dirname(os.path.dirname(
+            os.path.realpath(__file__)))
         repo_root = os.path.dirname(project_root)
         sys.path.append(os.path.join(repo_root, 'dev'))
         import download_chromedriver
@@ -16,6 +20,14 @@ def test_checking_prepared_environment_with_selenium():
         driver = webdriver.Chrome(chrome_path)
     else:
         driver = webdriver.Firefox()
-    driver.get("http://localhost:8000")
-    assert '돈까스 모임' in driver.page_source
-    driver.close()
+    return driver
+
+
+def test_checking_prepared_environment_with_selenium(browser):
+    browser.get("http://localhost:8000")
+    assert '돈까스 모임' in browser.page_source
+
+
+def test_2checking_prepared_environment_with_selenium(browser):
+    browser.get("http://localhost:8000")
+    assert '돈까스 모임' in browser.page_source

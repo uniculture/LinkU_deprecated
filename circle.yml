@@ -12,7 +12,7 @@ dependencies:
         background: true 
 test:
   override:
-    - pytest --cov=./linku/ linku/functional_tests/homepage_test.py
+    - pytest --cov=./linku/ linku
   post:
     - codecov
 

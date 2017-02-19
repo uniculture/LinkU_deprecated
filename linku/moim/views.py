@@ -1,6 +1,9 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from moim.models import Meeting
 
 
 def homepage(request):
-    return HttpResponse('돈까스 모임')
+    content = ''
+    for obj in Meeting.objects.all():
+        content += obj.name + "\n"
+    return HttpResponse(content)

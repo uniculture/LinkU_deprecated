@@ -6,7 +6,6 @@ import pytest
 
 @pytest.fixture(scope="module")
 def browser():
-    print("loading browser")
     if sys.platform == 'darwin':
         project_root = os.path.dirname(os.path.dirname(
             os.path.realpath(__file__)))
@@ -20,7 +19,8 @@ def browser():
         driver = webdriver.Chrome(chrome_path)
     else:
         driver = webdriver.Firefox()
-    return driver
+    yield driver
+    driver.close()
 
 
 def test_checking_prepared_environment_with_selenium(browser):

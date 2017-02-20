@@ -14,6 +14,13 @@ def test_meeting_model_have_fields():
 
 
 @pytest.mark.django_db
+def test_homepage_use_meeting_list_template(client):
+    response_templates = client.get('/').templates
+    assert 'meeting_list.html' in (
+        template.name for template in response_templates)
+
+
+@pytest.mark.django_db
 def test_save_meeting():
     Meeting.objects.create(maker='test', name='test', place='place',
                            start_time=datetime.datetime.now(),

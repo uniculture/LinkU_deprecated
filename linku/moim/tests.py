@@ -22,15 +22,16 @@ def test_homepage_use_meeting_list_template(client):
 
 @pytest.mark.django_db
 def test_save_meeting():
-    Meeting.objects.create(maker='test', name='test', place='place',
+    Meeting.objects.create(maker='test maker', name='test name', place='test place',
                            start_time=datetime.datetime.now(),
-                           distance_near_univ='test', price_range='test')
+                           distance_near_univ='test distance_near_univ', price_range='test price_range')
+    Meeting.objects.get(name='test name')
 
 
 @pytest.mark.django_db
-def test_view_home(client):
-    Meeting.objects.create(maker='test', name='돈까스 모임2', place='place',
+def test_homepage_view_meeting_info(client):
+    Meeting.objects.create(maker='test maker', name='test name', place='test place',
                            start_time=datetime.datetime.now(),
-                           distance_near_univ='test', price_range='test')
+                           distance_near_univ='test distance_near_univ', price_range='test price_range')
     response = client.get('/')
-    assert "돈까스 모임2" in response.content.decode("utf8")
+    assert "test name" in response.content.decode("utf8")

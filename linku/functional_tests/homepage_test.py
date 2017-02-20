@@ -23,11 +23,9 @@ def browser():
     return driver
 
 
-def test_checking_prepared_environment_with_selenium(browser):
-    browser.get("http://localhost:8000")
-    assert '돈까스 모임' in browser.page_source
+def test_first_page_card_title(browser):
+    # 평소 여자들에 환장하는 짱구는 요새 외로워서 누구 하나 낚아보고자 우리 서비스에 접속했다.
+    # 서비스에 접속하니 첫 화면에는 규카츠 먹을래?라는 글이 보였다.
 
-
-def test_2checking_prepared_environment_with_selenium(browser):
     browser.get("http://localhost:8000")
-    assert '돈까스 모임' in browser.page_source
+    assert '규카츠 먹을래?' in browser.page_source

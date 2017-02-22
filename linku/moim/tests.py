@@ -30,8 +30,12 @@ def test_save_meeting():
 
 @pytest.mark.django_db
 def test_homepage_view_meeting_info(client):
+    start_time = datetime.datetime.now()
     Meeting.objects.create(maker='test maker', name='test name', place='test place',
-                           start_time=datetime.datetime.now(),
+                           start_time=start_time,
                            distance_near_univ='test distance_near_univ', price_range='test price_range')
     response = client.get('/')
     assert "test name" in response.content.decode("utf8")
+    # template가 포맷에 맞춰 반환하는지 테스트
+    assert start_time.strftime(
+        '%m/%d %H:%M') in response.content.decode("utf8")

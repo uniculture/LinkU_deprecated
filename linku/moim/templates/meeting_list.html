@@ -1,12 +1,13 @@
 <html>
 <body>
     {% for meeting in meetings %}
-        {{ meeting.name }}
-        {{ meeting.maker }}
-        {{ meeting.place }}
-        {{ meeting.start_time|date:"m/d H:i" }}
-        {{ meeting.distance_near_univ }}
-        {{ meeting.price_range }}
+        {{ meeting.name }} <br>
+        {{ meeting.maker }} <br>
+        {{ meeting.place }} <br>
+        {{ meeting.start_time|date:"m/d H:i" }} <br>
+        {{ meeting.distance_near_univ }} <br>
+        {{ meeting.price_range }} <br>
+        <hr>
     {% endfor %}
 </body>
 </html>

@@ -23,8 +23,8 @@ def browser():
     driver.close()
 
 
-def test_first_page_card_title(browser):
-    # 평소 여자들에 환장하는 짱구는 요새 외로워서 누구 하나 낚아보고자 우리 서비스에 접속했다.
+def test_first_page_cards_title(browser):
+    # 평소 짱구는 요즘 새로운 사람을 만나고 싶어서 우리 서비스에 접속했다.
     # 서비스에 접속하니
     browser.get("http://localhost:8000")
 

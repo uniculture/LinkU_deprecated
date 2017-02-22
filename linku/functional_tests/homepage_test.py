@@ -23,9 +23,11 @@ def browser():
     driver.close()
 
 
-def test_first_page_card_title(browser):
+def test_first_page_cards_title(browser):
     # 평소 여자들에 환장하는 짱구는 요새 외로워서 누구 하나 낚아보고자 우리 서비스에 접속했다.
     # 서비스에 접속하니 첫 화면에는 규카츠 먹을래?라는 글이 보였다.
-
     browser.get("http://localhost:8000")
     assert '규카츠 먹을래?' in browser.page_source
+
+    # 그리고 우동 먹을래? 라는 글이 보였다.
+    assert '우동 먹을래?' in browser.page_source

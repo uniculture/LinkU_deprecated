@@ -34,11 +34,21 @@ def test_first_page_cards_title(browser):
     assert '규카츠 먹을래?' in browser.page_source
 
     # 그 아래에는 장선혁(개설자 이름)
+    assert '장선혁' in browser.page_source
+
     # 강남(장소)
+    assert '강남' in browser.page_source
+
     # 02/26 20:30 (시작 시간)
-    # 규카츠가 탐스럽게 보이는 사진
+    assert '02/22 21:52' in browser.page_source
+
+    # 규카츠가 맛있게 보이는 사진
     # 고려대학교 10km 이내(가까운 대학교와의 거리)
+    assert '고려대학교 10km 이내' in browser.page_source
+
     # 5,000원~10,000원(가격대)
+    assert '5,000원~10,000원' in browser.page_source
+
     # 그리고 신청하기 버튼이 카드 가장 하단에 있어서,
     # 한번 눌러보고 싶은 충동이 생겼다.
 

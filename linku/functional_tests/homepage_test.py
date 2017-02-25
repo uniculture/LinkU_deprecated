@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import sys
 import os
+
 from selenium import webdriver
+from selenium.webdriver.common.alert import Alert
+
 import pytest
 
 
@@ -48,9 +53,7 @@ def test_first_page_cards_title(browser):
 
     # 5,000원~10,000원(가격대)
     assert '5,000원~10,000원' in browser.page_source
-
-    # 그리고 신청하기 버튼이 카드 가장 하단에 있어서,
-    # 한번 눌러보고 싶은 충동이 생겼다.
+    # 들이 보인다.
 
     # 그 바로 하단에는 선이 그어져 있어서 왠지 서로 구분이 되는 느낌이다
     browser.find_element_by_tag_name('hr')
@@ -68,4 +71,42 @@ def test_first_page_cards_title(browser):
     assert '이화여자대학교 10km 이내' in browser.page_source
     # 5,000원~10,000원(가격대)
     assert '5,000원~10,000원' in browser.page_source
-    # 들이 보여졌다.
+    # 들이 보인다.
+
+    # 짱구는 두 모임 중에 지훈이의 '호타루 우동 모임'에 참가하고 싶어졌다.
+    # 그래서 모임 아래에 신청하기 버튼을 확인한 후,
+    btn_list = browser.find_elements_by_tag_name('button')
+    assert btn_list[1].text == "신청하기"
+
+    # 신청 버튼을 눌렀더니
+    btn_list[1].click()
+
+    # 해당 모임을 신청하는 페이지로 이동하였고
+    assert "/meetings/2/apply" in browser.current_url
+
+    # 상단에 "호타루에서 우동 먹을래?" 라는 모임의 제목이 보였다.
+    assert "호타루에서 우동 먹을래?" in browser.page_source
+
+    # 이름, 성별, 연락처를 입력하라는 메세지와 입력박스가 표시된다.
+    assert "이름 : " in browser.page_source
+    assert "연락처 : " in browser.page_source
+    assert "성별 : " in browser.page_source
+
+    input_boxs = browser.find_elements_by_tag_name('input')
+
+    # 그래서 짱구는 이름 칸에 '김짱구'라고 입력 했고
+    input_boxs[0].send_keys('김짱구')
+
+    # 연락처는 '010-1234-5678' 로 입력하고
+    input_boxs[1].send_keys('010-1234-5678')
+
+    # 성별은 '남성'으로 체크하고
+    input_boxs[2].click()
+
+    # 신청 버튼을 누르자
+    apply_button = browser.find_element_by_tag_name('button')
+    apply_button.click()
+
+    # '신청이 완료되었습니다.' 라는 메세지가 표시됐다.
+    assert "신청이완료되었습니다." in Alert(browser).text
+    Alert(browser).accept()

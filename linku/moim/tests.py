@@ -21,6 +21,29 @@ def test_homepage_use_meeting_list_template(client):
 
 
 @pytest.mark.django_db
+def test_apply_meeting_view_use_correct_template(client):
+    Meeting.objects.create(maker='test maker', name='test name', place='test place',
+                           start_time=datetime.datetime.now(),
+                           distance_near_univ='test distance_near_univ', price_range='test price_range')
+    response_templates = client.get('/meetings/1/apply/').templates
+    assert 'apply_meeting.html' in (
+        template.name for template in response_templates)
+
+
+@pytest.mark.django_db
+def test_apply_meeting_view_return_correct_meeting_name(client):
+    Meeting.objects.create(maker='test maker1', name='test name1', place='test place1',
+                           start_time=datetime.datetime.now(),
+                           distance_near_univ='test distance_near_univ1', price_range='test price_range1')
+    Meeting.objects.create(maker='test maker2', name='test name2', place='test place2',
+                           start_time=datetime.datetime.now(),
+                           distance_near_univ='test distance_near_univ2', price_range='test price_range2')
+    meeting = Meeting.objects.get(maker='test maker2')
+    response = client.get('/meetings/' + str(meeting.id) + '/apply/')
+    assert meeting.name in response.content.decode("utf8")
+
+
+@pytest.mark.django_db
 def test_save_meeting():
     Meeting.objects.create(maker='test maker', name='test name', place='test place',
                            start_time=datetime.datetime.now(),

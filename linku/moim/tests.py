@@ -35,7 +35,27 @@ def test_homepage_view_meeting_info(client):
                            start_time=start_time,
                            distance_near_univ='test distance_near_univ', price_range='test price_range')
     response = client.get('/')
+    assert "test maker" in response.content.decode("utf8")
     assert "test name" in response.content.decode("utf8")
+    assert "test place" in response.content.decode("utf8")
+    assert "test distance_near_univ" in response.content.decode("utf8")
+    assert "test price_range" in response.content.decode("utf8")
+
     # template가 포맷에 맞춰 반환하는지 테스트
     assert start_time.strftime(
         '%m/%d %H:%M') in response.content.decode("utf8")
+
+
+@pytest.mark.django_db
+def test_homepage_view_multiple_cards(client):
+    start_time = datetime.datetime.now()
+    Meeting.objects.create(maker='test maker', name='test name1', place='test place',
+                           start_time=start_time,
+                           distance_near_univ='test distance_near_univ', price_range='test price_range')
+    Meeting.objects.create(maker='test maker', name='test name2', place='test place',
+                           start_time=start_time,
+                           distance_near_univ='test distance_near_univ', price_range='test price_range')
+
+    response = client.get('/')
+    assert "test name1" in response.content.decode("utf8")
+    assert "test name2" in response.content.decode("utf8")

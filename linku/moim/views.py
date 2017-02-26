@@ -1,6 +1,5 @@
-from django.http import HttpResponse
-from moim.models import Meeting
-from django.shortcuts import render
+from moim.models import Meeting, Applier
+from django.shortcuts import render, redirect
 
 
 def homepage(request):
@@ -10,4 +9,10 @@ def homepage(request):
 
 def apply_meeting(request, meeting_id):
     meeting = Meeting.objects.get(id=meeting_id)
-    return render(request, 'apply_meeting.html', {'meeting': meeting})
+    if request.method == 'GET':
+        return render(request, 'apply_meeting.html', {'meeting': meeting})
+
+    elif request.method == 'POST':
+        Applier.objects.create(name=request.POST['name'], phone_number=request.POST['phone_number'],
+                               gender=request.POST['gender'], meeting=meeting)
+        return redirect('/')

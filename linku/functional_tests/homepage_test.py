@@ -8,6 +8,8 @@ from selenium.webdriver.common.alert import Alert
 
 import pytest
 
+ROOT_URL_DEVELOP = "http://localhost:8000"
+
 
 @pytest.fixture(scope="module")
 def browser():
@@ -31,7 +33,7 @@ def browser():
 def test_first_page_cards_title(browser):
     # 평소 짱구는 요즘 새로운 사람을 만나고 싶어서 우리 서비스에 접속했다.
     # 서비스에 접속하니
-    browser.get("http://localhost:8000")
+    browser.get(ROOT_URL_DEVELOP)
 
     # 첫 화면에는 모임에 대한 정보가 보이는 카드들이 보였다.
 
@@ -82,7 +84,7 @@ def test_first_page_cards_title(browser):
     btn_list[1].click()
 
     # 해당 모임을 신청하는 페이지로 이동하였고
-    assert "/meetings/2/apply" in browser.current_url
+    assert ROOT_URL_DEVELOP + "/meetings/2/apply/" == browser.current_url
 
     # 상단에 "호타루에서 우동 먹을래?" 라는 모임의 제목이 보였다.
     assert "호타루에서 우동 먹을래?" in browser.page_source
@@ -114,4 +116,4 @@ def test_first_page_cards_title(browser):
     Alert(browser).accept()
 
     # 메인 홈페이지로 이동을 하였다
-    assert "http://localhost:8000/" == browser.current_url
+    assert ROOT_URL_DEVELOP + "/" == browser.current_url

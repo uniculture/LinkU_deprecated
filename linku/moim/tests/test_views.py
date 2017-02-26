@@ -49,7 +49,6 @@ def test_homepage_view_multiple_cards(client):
     assert "test name2" in response.content.decode("utf8")
 
 
-
 @pytest.mark.django_db
 def test_save_applier_info_after_applying_post_request(client):
     start_time = datetime.datetime.now()

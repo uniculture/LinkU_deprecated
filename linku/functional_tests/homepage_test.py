@@ -109,4 +109,9 @@ def test_first_page_cards_title(browser):
 
     # '신청이 완료되었습니다.' 라는 메세지가 표시됐다.
     assert "신청이완료되었습니다." in Alert(browser).text
+
+    # 확인 버튼을 눌렀더니
     Alert(browser).accept()
+
+    # 메인 홈페이지로 이동을 하였다
+    assert "http://localhost:8000/" == browser.current_url

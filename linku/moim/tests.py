@@ -1,6 +1,6 @@
 import pytest
 import datetime
-from moim.models import Meeting
+from moim.models import Meeting, Applier
 
 
 def test_meeting_model_have_fields():
@@ -11,6 +11,13 @@ def test_meeting_model_have_fields():
     Meeting._meta.get_field('image_path')
     Meeting._meta.get_field('distance_near_univ')
     Meeting._meta.get_field('price_range')
+
+
+def test_applier_model_have_fields():
+    Applier._meta.get_field('name')
+    Applier._meta.get_field('phone_number')
+    Applier._meta.get_field('gender')
+    Applier._meta.get_field('meeting')
 
 
 @pytest.mark.django_db
@@ -82,3 +89,39 @@ def test_homepage_view_multiple_cards(client):
     response = client.get('/')
     assert "test name1" in response.content.decode("utf8")
     assert "test name2" in response.content.decode("utf8")
+
+
+@pytest.mark.django_db
+def test_save_applier():
+    start_time = datetime.datetime.now()
+    meeting = Meeting.objects.create(maker='test maker', name='test name1', place='test place', start_time=start_time,
+                                     distance_near_univ='test distance_near_univ', price_range='test price_range')
+    Applier.objects.create(name='test name', phone_number='010-1111-1111', gender='M', meeting=meeting)
+
+
+@pytest.mark.django_db
+def test_save_applier_info_after_applying_post_request(client):
+    start_time = datetime.datetime.now()
+    meeting = Meeting.objects.create(maker='test maker', name='test name1', place='test place', start_time=start_time,
+                                     distance_near_univ='test distance_near_univ', price_range='test price_range')
+
+    client.post('/meetings/%d/apply/' % (meeting.id,),
+                data={'name': 'test name',
+                      'phone_number': '010-1111-1111',
+                      'gender': 'M'})
+    Applier.objects.get(name='test name')
+
+
+@pytest.mark.django_db
+def test_redirect_to_homepage_after_applying_post_request(client):
+    start_time = datetime.datetime.now()
+    meeting = Meeting.objects.create(maker='test maker', name='test name1', place='test place', start_time=start_time,
+                                     distance_near_univ='test distance_near_univ', price_range='test price_range')
+
+    response = client.post('/meetings/%d/apply/' % (meeting.id,),
+                           data={'name': 'test name',
+                                 'phone_number': '010-1111-1111',
+                                 'gender': 'M'})
+
+    assert response.status_code == 302
+    assert '/' == response.url

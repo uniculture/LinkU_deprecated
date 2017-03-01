@@ -5,6 +5,7 @@ import os
 
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
+from urllib.parse import urljoin
 
 import pytest
 
@@ -84,7 +85,8 @@ def test_first_page_cards_title(browser):
     btn_list[1].click()
 
     # 해당 모임을 신청하는 페이지로 이동하였고
-    assert ROOT_URL_DEVELOP + "/meetings/2/apply/" == browser.current_url
+    assert urljoin(ROOT_URL_DEVELOP,
+                   "/meetings/2/apply/") == browser.current_url
 
     # 상단에 "호타루에서 우동 먹을래?" 라는 모임의 제목이 보였다.
     assert "호타루에서 우동 먹을래?" in browser.page_source
@@ -116,4 +118,4 @@ def test_first_page_cards_title(browser):
     Alert(browser).accept()
 
     # 메인 홈페이지로 이동을 하였다
-    assert ROOT_URL_DEVELOP + "/" == browser.current_url
+    assert urljoin(ROOT_URL_DEVELOP, '/') == browser.current_url

@@ -1,0 +1,2 @@
+ignore:
+  - "./linku/moim/migrations"  # ignore migration folder

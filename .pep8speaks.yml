@@ -17,4 +17,4 @@ pycodestyle:
     ignore:  # Errors and warnings to ignore
         - E501
 
-no_blank_comment: False  # If True, no comment is made when the bot does not find any pep8 errors
+no_blank_comment: True  # If True, no comment is made when the bot does not find any pep8 errors

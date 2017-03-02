@@ -7,9 +7,8 @@ machine:
 dependencies:
   pre:
     - pip install -r requirements-dev.txt
-    - DJANGO_SETTINGS_MODULE=linku.settings.development
   post:
-    - ./prepare_functionaltest.sh :
+    - ./prepare_functionaltest_in_development.sh :
         background: true 
 test:
   override:

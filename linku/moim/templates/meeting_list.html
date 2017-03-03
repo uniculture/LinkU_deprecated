@@ -1,5 +1,6 @@
 <html>
 <body>
+    <button onclick="location.href='/signup'" name="signup">회원가입</button>
     {% for meeting in meetings %}
         {{ meeting.name }} <br>
         {{ meeting.maker }} <br>
@@ -7,7 +8,7 @@
         {{ meeting.start_time|date:"m/d H:i" }} <br>
         {{ meeting.distance_near_univ }} <br>
         {{ meeting.price_range }} <br>
-        <button onclick="location.href='/meetings/{{ meeting.id }}/apply'">신청하기</button><br>
+        <button onclick="location.href='/meetings/{{ meeting.id }}/apply'" name="apply">신청하기</button><br>
         <hr>
     {% endfor %}
 </body>

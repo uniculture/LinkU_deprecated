@@ -2,6 +2,9 @@ from moim.models import Meeting, Applier
 from django.shortcuts import render, redirect
 
 
+def sign_up(request):
+    return render(request, 'sign_up.html')
+
 def homepage(request):
     meetings = Meeting.objects.all()
     return render(request, 'meeting_list.html', {'meetings': meetings})

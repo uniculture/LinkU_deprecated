@@ -20,3 +20,4 @@ class Applier(models.Model):
     phone_number = models.TextField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     meeting = models.ForeignKey('Meeting', on_delete=models.CASCADE)
+

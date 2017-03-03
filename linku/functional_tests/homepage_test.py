@@ -79,10 +79,10 @@ def test_first_page_cards_title(browser):
     # 짱구는 두 모임 중에 지훈이의 '호타루 우동 모임'에 참가하고 싶어졌다.
     # 그래서 모임 아래에 신청하기 버튼을 확인한 후,
     btn_list = browser.find_elements_by_tag_name('button')
-    assert btn_list[1].text == "신청하기"
+    assert btn_list[2].text == "신청하기"
 
     # 신청 버튼을 눌렀더니
-    btn_list[1].click()
+    btn_list[2].click()
 
     # 해당 모임을 신청하는 페이지로 이동하였고
     assert urljoin(ROOT_URL_DEVELOP,
@@ -122,7 +122,6 @@ def test_first_page_cards_title(browser):
 
 
 def test_specific_page_contents(browser):
-
     # 로그인을 한 짱구는 첫 페이지로 돌아간다.
     browser.get(ROOT_URL_DEVELOP)
 
@@ -136,9 +135,9 @@ def test_specific_page_contents(browser):
     # 짱구는 "상세보기"를 누른다
     btn_list_in_first_page[3].click()
 
-    # "상세보기"를 누르니 상세페이지가 나왔다.
+    # "상세보기"를 누르니 상세페이지 주소로 이동하였다.
     assert urljoin(ROOT_URL_DEVELOP,
-                   "/meetings/2") == browser.current_url
+                   "/meetings/2/") == browser.current_url
 
     # 상세모임에 들어간 짱구는 크게 가운데에
     # 음식 사진
@@ -149,7 +148,9 @@ def test_specific_page_contents(browser):
     assert '호타루에서 우동 먹을래?' in browser.page_source
 
     # 모임장의 사진과 모임에 대한 소개가 있는것을 확인한다.
+    # 모임장은 "최지훈"이다
     assert '모임장' in browser.page_source
+    assert '최지훈' in browser.page_source
 
     # 그 아래는 참여자를 나타내는 박스와 참여자의 프로필 사진들이 있다.
     assert '참여자' in browser.page_source
@@ -164,23 +165,26 @@ def test_specific_page_contents(browser):
 
     # 위치, 시간, 모집인원, 성비, 예상비용이 나타나있다.
     assert '위치' in browser.page_source
+    # 장소는 "이대"이며
     assert '이대' in browser.page_source
 
     assert '시간' in browser.page_source
+    # 시간은 "22:22"였고
     assert '22:22' in browser.page_source
 
+    # 모집인원 3명중에 참여된 인원은 2명이었다.
     assert '모집인원' in browser.page_source
     assert '2/3' in browser.page_source
 
     assert '성비' in browser.page_source
 
     assert '예상비용' in browser.page_source
+    # 가격은 '5,000원~10,000원'이다.
     assert '5,000원~10,000원' in browser.page_source
 
     # 예상비용 아래 "오케이 콜!"과 "♡찜하기"라는 버튼이 있었다
-    btn_list_in_specific_page = browser.find_elements_by_tag_name('button')
+    sidebar = browser.find_element_by_id('sidebar')
+    btn_list_in_sidebar = sidebar.find_elements_by_tag_name('button')
 
-    assert btn_list_in_specific_page[0].text == '오케이 콜!'
-    assert btn_list_in_specific_page[1].text == '♡찜하기'
-
-
+    assert btn_list_in_sidebar[0].text == '오케이 콜!'
+    assert btn_list_in_sidebar[1].text == '♡찜하기'

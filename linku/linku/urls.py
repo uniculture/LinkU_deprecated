@@ -20,5 +20,6 @@ from moim import views
 urlpatterns = [
     url(r'^$', views.homepage, name='home'),
     url(r'^meetings/(?P<meeting_id>\d+)/apply/$', views.apply_meeting, name='apply'),
+    url(r'^meetings/(?P<meeting_id>\d+)/$', views.enter_specific_moim_page, name='enter_specific_moim_page'),
     url(r'^admin/', admin.site.urls),
 ]

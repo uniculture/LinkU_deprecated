@@ -3,7 +3,11 @@ from django.shortcuts import render, redirect
 
 
 def sign_up(request):
+    if request.method == 'POST':
+        return redirect('/')
+
     return render(request, 'sign_up.html')
+
 
 def homepage(request):
     meetings = Meeting.objects.all()

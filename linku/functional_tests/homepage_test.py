@@ -151,6 +151,9 @@ def test_first_page_cards_title(browser):
     # 그 바로 옆에는 이메일을 입력할 입력 박스가 있었고
     email_box = browser.find_element_by_xpath("//input[@name='email']")
 
+    # 짱구는 그 안에다 자신의 이메일인 'jjangu@gmail.com'라고 입력하였다.
+    email_box.send_keys('jjangu@gmail.com')
+
     # 바로 왼쪽에는 '이메일:' 이라고 적혀있었다.
     email_label = browser.find_element_by_xpath("//label[@for='email']")
     assert '이메일:' == email_label.text
@@ -164,32 +167,41 @@ def test_first_page_cards_title(browser):
     assert '비밀번호:' == pwd_label.text
 
     # 그 바로 옆에는 비밀번호를 입력할 입력 박스가 있었다.
-    pwd_box = browser.find_elements_by_xpath("//input[@name='password']")
+    pwd_box = browser.find_element_by_xpath("//input[@name='password']")
+
+    # 그래서 짱구는 자신이 좋아하는 비밀번호 '1q2w3e4r!'를 입력했다
+    pwd_box.send_keys('1q2w3e4r!')
 
     # 그 아래에는 비밀번호 확인이라 적혀있었고
     pwd_chk_label = browser.find_element_by_xpath("//label[@for='password_check']")
     assert '비밀번호 확인:' == pwd_chk_label.text
 
-    # 그 바로 옆에는 비밀번호 확인을 입력할 입력박스가 있었다.
-    pwd_box = browser.find_elements_by_xpath("//input[@name='password_check']")
+    # 그 바로 옆에는 비밀번호 확인을 입력할 입력박스가 있었고,
+    pwd_chk_box = browser.find_element_by_xpath("//input[@name='password_check']")
+
+    # 그래서 짱구는 같은 비밀번호 '1q2w3e4r!'를 입력하였다.
+    pwd_chk_box.send_keys('1q2w3e4r!')
 
     # 그 아래에는 성별이 적혀있었고
     gender_label = browser.find_element_by_xpath("//label[@for='gender']")
     assert '성별:' == gender_label.text
 
     # 그 바로 옆에는 라디오 버튼과,
-    male_radio = browser.find_element_by_name('male')
+    male_radio = browser.find_element_by_id('male')
 
     # 라디오 버튼에 딸려있는 라벨인 '남자'
     male_label = browser.find_element_by_xpath("//label[@for='male']")
     assert '남자' == male_label.text
 
     # 또 바로 옆에는 라디오 버튼이 있었고
-    female_radio = browser.find_element_by_name('female')
+    female_radio = browser.find_element_by_id('female')
 
     # '여자'라는 라벨이 딸려있었다.
     female_label = browser.find_element_by_xpath("//label[@for='female']")
     assert '여자' == female_label.text
+
+    # 철수는 남자라서 남자에 체크했다
+    male_radio.click()
 
     # 그 아래에는 닉네임 입력이라 적혀있었고
     nickname_label = browser.find_element_by_xpath("//label[@for='nickname']")
@@ -197,6 +209,9 @@ def test_first_page_cards_title(browser):
 
     # 그 바로 옆에는 닉네임을 입력할 입력 박스가 있었다.
     nickname_input = browser.find_element_by_name('nickname')
+
+    # 짱구는 '짱구는 못말려'를 입력했다.
+    nickname_input.send_keys('짱구는 못말려')
 
     # 밑에는 프로필 사진이 적혀있었고
     profile_label = browser.find_element_by_xpath("//label[@for='profile']")
@@ -215,6 +230,7 @@ def test_first_page_cards_title(browser):
     phone_bx_2 = browser.find_element_by_xpath("//input[@name='phone2']")
     phone_bx_3 = browser.find_element_by_xpath("//input[@name='phone3']")
 
+
     # 첫번째 입력박스는 'ㅁㄹㅁㄹ'를 쳤을 때는 반응이 없었고
     phone_bx_1.send_keys('ㅁㄹㅁㄹ')
     assert '' == phone_bx_1.get_attribute('value')
@@ -223,12 +239,20 @@ def test_first_page_cards_title(browser):
     phone_bx_1.send_keys('1244')
     assert '124' == phone_bx_1.get_attribute('value')
 
-    # 그리고 바로 밑에는 안심번호를 사용할 수 있도록 라디오 버튼 하나와
-    comfor_num_radio = browser.find_element_by_xpath("//input[@name='comfortable_num']")
+    # 그래서 짱구는 각 칸에 010, 1234, 5678을 입력했다.
+    phone_bx_1.send_keys('010')
+    phone_bx_2.send_keys('1234')
+    phone_bx_3.send_keys('5678')
+
+    # 그리고 바로 밑에는 안심번호를 사용할 수 있도록 체크박스 버튼 하나와
+    comfor_num_chkbox = browser.find_element_by_xpath("//input[@name='comfortable_num']")
 
     # '안심번호 사용하기'라는 라벨이 붙어있었다.
     comfor_num_label = browser.find_element_by_xpath("//label[@for='comfortable_num']")
     assert '안심번호 사용하기' == comfor_num_label.text
+
+    # 짱구는 안심번호를 사용하고 싶어서 안심번호 사용하기를 체크했다.
+    comfor_num_chkbox.click()
 
     # 그리고 대학생 신분을 인증하기 위해, '신분 인증'이라는 라벨과 함께
     verification_label = browser.find_element_by_xpath("//label[@for='verification']")
@@ -240,6 +264,9 @@ def test_first_page_cards_title(browser):
     # 메일 인증이라는 버튼이 있었다
     verification_btn = browser.find_element_by_xpath("//button[@name='verification']")
     assert '메일 인증' == verification_btn.text
+
+    # 단국대생인 짱구는 메일 인증을 위해 입력박스에 자신의 메일인 'jjangu@dankook.ac.kr'를 입력했다.
+    verification_box.send_keys('jjangu@dankook.ac.kr')
 
     # 그리고 가입을 취소하기 위한 취소버튼이 바로 아래 쪽에 있었고
     cancel_btn = browser.find_element_by_xpath("//button[@name='cancel']")
@@ -253,3 +280,14 @@ def test_first_page_cards_title(browser):
     # 거기엔 '가입완료'라고 적혀있었다.
     assert '가입완료' == confirm_btn.text
 
+    # 짱구는 모든 정보를 입력해서 가입완료 버튼을 눌렀다
+    confirm_btn.click()
+
+    # 가입이 완료되었습니다. 라는 팝업이 생겨서,
+    assert "가입이 완료되었습니다." == Alert(browser).text
+
+    # 확인 버튼을 눌렀더니
+    Alert(browser).accept()
+
+    # 메인 홈페이지로 이동을 하였다
+    assert urljoin(ROOT_URL_DEVELOP, '/') == browser.current_url

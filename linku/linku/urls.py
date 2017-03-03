@@ -19,7 +19,7 @@ from moim import views
 
 urlpatterns = [
     url(r'^$', views.homepage, name='home'),
-    url(r'^signup/$', views.sign_up,name='signup'),
+    url(r'^signup/$', views.sign_up, name='signup'),
     url(r'^meetings/(?P<meeting_id>\d+)/apply/$', views.apply_meeting, name='apply'),
     url(r'^admin/', admin.site.urls),
 ]

@@ -230,11 +230,6 @@ def test_first_page_cards_title(browser):
     phone_bx_2 = browser.find_element_by_xpath("//input[@name='phone2']")
     phone_bx_3 = browser.find_element_by_xpath("//input[@name='phone3']")
 
-
-    # 첫번째 입력박스는 'ㅁㄹㅁㄹ'를 쳤을 때는 반응이 없었고
-    phone_bx_1.send_keys('ㅁㄹㅁㄹ')
-    assert '' == phone_bx_1.get_attribute('value')
-
     # 첫번째 입력박스에 '1244'를 쳤더니 '124'까지만 입력이 되었다
     phone_bx_1.send_keys('1244')
     assert '124' == phone_bx_1.get_attribute('value')

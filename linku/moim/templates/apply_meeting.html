@@ -3,15 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Apply Meeting</title>
+    <script>
+        function validateForm() {
+            var name = document.forms["applyForm"]["name"].value;
+            var phone_number = document.forms["applyForm"]["phone_number"].value;
+            var genders = document.forms["applyForm"]["gender"];
+
+            if (name == "" || phone_number.length != 11 ) {
+                alert("잘못된입력입니다.");
+                return false;
+            }
+            else if (genders[0].checked == false && genders[1].checked == false) {
+                alert("잘못된입력입니다.");
+                return false;
+            }
+            else {
+                alert("신청이완료되었습니다.");
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>{{ meeting.name }}</h1>
-    <form method="post">
+    <form name="applyForm" method="post" onsubmit="return validateForm()">
         이름 : <input name="name" type="text"/><br>
         연락처 : <input name="phone_number" type="text"/><br>
-        성별 : <input name="gender" type="radio" value="남">남</input>
-        <input name="gender" type="radio" value="여">여</input> <br>
-        <button onclick=alert("신청이완료되었습니다.")>신청</button>
+        성별 : <input name="gender" type="radio" value="M">남</input>
+        <input name="gender" type="radio" value="F">여</input><br>
+        <button>신청</button>
         {% csrf_token %}
     </form>
 </body>

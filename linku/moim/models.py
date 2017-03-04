@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -16,7 +17,9 @@ class Applier(models.Model):
         ('M', 'Male'),
         ('F', 'Female'),
     )
-    name = models.TextField()
-    phone_number = models.TextField()
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+
+    name = models.TextField(blank=False)
+    phone_regex = RegexValidator(regex='^\d{11}$', message='Length has to be 11 & Only number')
+    phone_number = models.CharField(blank=False, validators=[phone_regex], max_length=11)
+    gender = models.CharField(blank=False, max_length=1, choices=GENDER_CHOICES)
     meeting = models.ForeignKey('Meeting', on_delete=models.CASCADE)

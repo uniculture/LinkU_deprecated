@@ -2,6 +2,7 @@
 
 import sys
 import os
+import time
 
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -120,7 +121,13 @@ def test_first_page_cards_title(browser):
     # 메인 홈페이지로 이동을 하였다
     assert urljoin(ROOT_URL_DEVELOP, '/') == browser.current_url
 
-    # 짱구는 다시 확인하니 회원가입 버튼이 최상단에서 보였고,
+
+def test_signup_page(browser):
+    # 평소 짱구는 요즘 새로운 사람을 만나고 싶어서 우리 서비스에 접속했다.
+    # 서비스에 접속하니
+    browser.get(ROOT_URL_DEVELOP)
+
+    # 회원가입 버튼이 최상단에서 보였고,
     sign_up_button = browser.find_element_by_name('signup')
 
     # 자세히 읽어보니 그 버튼 안에는 회원가입 이라고 적혀있었다.

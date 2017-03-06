@@ -4,7 +4,7 @@ import datetime
 
 
 @pytest.mark.django_db
-def test_homepage_use_meeting_list_template(client):
+def test_homepage_use_sign_up_template(client):
     response_templates = client.get('/signup/').templates
     assert 'sign_up.html' in (
         template.name for template in response_templates)

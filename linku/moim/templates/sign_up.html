@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+<h1>회원가입</h1>
+<h2>어서와 링쿠는 처음이지?</h2>
+
+<form method="post" >
+    <label for="email">이메일:</label>
+    <input type="text" name="email" id="email"/>
+    <button name="email_dup_chk">중복확인</button>
+    <br>
+
+    <label for="password">비밀번호:</label>
+    <input type="password" name="password" id="password"/>
+    <br>
+
+    <label for="password_check">비밀번호 확인:</label>
+    <input type="password" name="password_check" id="password_check"/>
+    <br>
+
+    <label for="gender">성별:</label>
+
+    <input type="radio" name="gender" id="male" value="남"/>
+    <label for="male">남자</label>
+
+    <input type="radio" name="gender" id="female" value="여"/>
+    <label for="female">여자</label>
+    <br>
+
+    <label for="nickname">닉네임 입력:</label>
+    <input type="text" name="nickname" id="nickname"/>
+    <br>
+
+    <label for="profile">프로필 사진</label>
+    <button name="profile" id="profile">첨부</button>
+    <br>
+
+    <label for="phone1">휴대폰 번호:</label>
+
+    <input type="text" name="phone1" id="phone1" maxlength="3" onkeypress="if (event.keyCode<48|| event.keyCode>57)  event.returnValue=false;"
+           style='IME-MODE:disabled;'/>
+    <input type="text" name="phone2" maxlength="4" onkeypress="if (event.keyCode<48|| event.keyCode>57)  event.returnValue=false;"
+           style='IME-MODE:disabled;'/>
+    <input type="text" name="phone3" maxlength="4" onkeypress="if (event.keyCode<48|| event.keyCode>57)  event.returnValue=false;"
+           style='IME-MODE:disabled;'/>
+    <br>
+
+    <label for="comfortable_num">안심번호 사용하기</label>
+    <input type="checkbox" name="comfortable_num" id="comfortable_num"/>
+    <br>
+
+    <label for="verification">신분 인증:</label>
+    <input type="text" name="verification" id="verification"/>
+
+    <button name="verification">메일 인증</button>
+    <br>
+
+    <button name="cancel">취소</button>
+    <button type="submit" onclick="alert('가입이 완료되었습니다.')" name="confirm">가입완료</button>
+    {% csrf_token %}
+
+</form>
+</body>
+</html>

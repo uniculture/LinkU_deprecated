@@ -1,5 +1,20 @@
-from moim.models import Meeting, Applier
+from moim.models import Meeting, Applier, User
 from django.shortcuts import render, redirect
+
+
+def sign_up(request):
+    if request.method == 'POST':
+        phone1 = request.POST['phone1']
+        phone2 = request.POST['phone2']
+        phone3 = request.POST['phone3']
+
+        User.objects.create(email=request.POST['email'], password=request.POST['password'],
+                            gender=request.POST['gender'],
+                            nickname=request.POST['nickname'], phone_number=phone1 + phone2 + phone3)
+
+        return redirect('/')
+
+    return render(request, 'sign_up.html')
 
 
 def homepage(request):

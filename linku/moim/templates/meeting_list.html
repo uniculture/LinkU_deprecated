@@ -8,7 +8,8 @@
         {{ meeting.start_time|date:"m/d H:i" }} <br>
         {{ meeting.distance_near_univ }} <br>
         {{ meeting.price_range }} <br>
-        <button onclick="location.href='/meetings/{{ meeting.id }}/apply'" name="apply">신청하기</button><br>
+        <button onclick="location.href='/meetings/{{ meeting.id }}/apply'">신청하기</button><br>
+        <button onclick="location.href='/meetings/{{ meeting.id }}'">상세보기</button><br>
         <hr>
     {% endfor %}
 </body>

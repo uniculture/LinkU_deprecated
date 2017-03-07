@@ -2,7 +2,6 @@
 
 import sys
 import os
-import time
 
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -79,11 +78,11 @@ def test_first_page_cards_title(browser):
 
     # 짱구는 두 모임 중에 지훈이의 '호타루 우동 모임'에 참가하고 싶어졌다.
     # 그래서 모임 아래에 신청하기 버튼을 확인한 후,
-    btn_list = browser.find_elements_by_name('apply')
-    assert btn_list[1].text == "신청하기"
+    btn_list = browser.find_elements_by_tag_name('button')
+    assert btn_list[3].text == "신청하기"
 
     # 신청 버튼을 눌렀더니
-    btn_list[1].click()
+    btn_list[3].click()
 
     # 해당 모임을 신청하는 페이지로 이동하였고
     assert urljoin(ROOT_URL_DEVELOP,
@@ -120,6 +119,75 @@ def test_first_page_cards_title(browser):
 
     # 메인 홈페이지로 이동을 하였다
     assert urljoin(ROOT_URL_DEVELOP, '/') == browser.current_url
+
+
+def test_specific_page_contents(browser):
+    # 로그인을 한 짱구는 첫 페이지로 돌아간다.
+    browser.get(ROOT_URL_DEVELOP)
+
+    # "호타루에서 우동 먹을래?"를 보고 세부내용을 보기로 마음 먹는다.
+    assert "호타루에서 우동 먹을래?" in browser.page_source
+
+    # 짱구는 "호타루에서 우동 먹을래?"안에 있는 "상세보기"를 확인하고
+    btn_list_in_first_page = browser.find_elements_by_tag_name('button')
+    assert btn_list_in_first_page[4].text == "상세보기"
+
+    # 짱구는 "상세보기"를 누른다
+    btn_list_in_first_page[4].click()
+
+    # "상세보기"를 누르니 상세페이지 주소로 이동하였다.
+    assert urljoin(ROOT_URL_DEVELOP,
+                   "/meetings/2/") == browser.current_url
+
+    # 상세모임에 들어간 짱구는 크게 가운데에
+    # 음식 사진
+    # "월/일 장소 시간"의 형태로 날짜 장소 및 시간을 확인 할 수 있었으며
+    assert '02/22 이대 22:22' in browser.page_source
+
+    # 모임 제목을 확인할 수 있었고
+    assert '호타루에서 우동 먹을래?' in browser.page_source
+
+    # 모임장의 사진과 모임에 대한 소개가 있는것을 확인한다.
+    # 모임장은 "최지훈"이다
+    assert '모임장' in browser.page_source
+    assert '최지훈' in browser.page_source
+
+    # 그 아래는 참여자를 나타내는 박스와 참여자의 프로필 사진들이 있다.
+    assert '참여자' in browser.page_source
+
+    # 그 아래는 위치와 위치의 지도가 나타나있다
+    assert '위치' in browser.page_source
+
+    # 그 아래는 댓글 창이 있는 것을 확인 했다.
+    assert '댓글' in browser.page_source
+
+    # 우측에는 모임에 대한 정보 요약이 있으며
+
+    # 위치, 시간, 모집인원, 성비, 예상비용이 나타나있다.
+    assert '위치' in browser.page_source
+    # 장소는 "이대"이며
+    assert '이대' in browser.page_source
+
+    assert '시간' in browser.page_source
+    # 시간은 "22:22"였고
+    assert '22:22' in browser.page_source
+
+    # 모집인원 3명중에 참여된 인원은 2명이었다.
+    assert '모집인원' in browser.page_source
+    assert '2/3' in browser.page_source
+
+    assert '성비' in browser.page_source
+
+    assert '예상비용' in browser.page_source
+    # 가격은 '5,000원~10,000원'이다.
+    assert '5,000원~10,000원' in browser.page_source
+
+    # 예상비용 아래 "오케이 콜!"과 "♡찜하기"라는 버튼이 있었다
+    sidebar = browser.find_element_by_id('sidebar')
+    btn_list_in_sidebar = sidebar.find_elements_by_tag_name('button')
+
+    assert btn_list_in_sidebar[0].text == '오케이 콜!'
+    assert btn_list_in_sidebar[1].text == '♡찜하기'
 
 
 def test_signup_page(browser):

@@ -1,0 +1,28 @@
+<html>
+<body>
+<div>
+    <div>
+        {{ meeting.start_time|date:"m/d" }} {{ meeting.place }} {{ meeting.start_time|date:"H:i" }}<br>
+        {{ meeting.name }} <br>
+        모임장 {{ meeting.maker }} <br>
+        참여자 <br>
+        위치 <br>
+    </div>
+    <div>
+        댓글 <br>
+    </div>
+</div>
+
+<div id="sidebar">
+    위치 {{ meeting.place }} <br>
+    시간 {{ meeting.start_time|date:"H:i" }} <br>
+    모집인원 2/3<br>
+    성비 <br>
+    예상비용 {{ meeting.price_range }} <br>
+    <button onclick="location.href='/meetings/{{ meeting.id }}/apply'">오케이 콜!</button>
+    <br>
+    <button onclick="">♡찜하기</button>
+    <br>
+</div>
+</body>
+</html>

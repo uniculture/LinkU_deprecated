@@ -52,7 +52,7 @@ def test_homepage_view_multiple_cards(client):
 @pytest.mark.django_db
 def test_save_applier_info_after_applying_post_request(client):
     start_time = datetime.datetime.now()
-    meeting = Meeting.objects.create(maker='test maker', name='test name1', place='test place', start_time=start_time,
+    meeting = Meeting.objects.create(maker='test maker', name='test name', place='test place', start_time=start_time,
                                      distance_near_univ='test distance_near_univ', price_range='test price_range')
 
     client.post('/meetings/%d/apply/' % (meeting.id,),
@@ -75,6 +75,17 @@ def test_redirect_to_homepage_after_applying_post_request(client):
 
     assert response.status_code == 302
     assert '/' == response.url
+
+
+@pytest.mark.django_db
+def test_specific_moim_return_correct_meeting(client):
+    start_time = datetime.datetime.now()
+    meeting = Meeting.objects.create(maker='test maker', name='test name', place='test place', start_time=start_time,
+                                     distance_near_univ='test distance_near_univ', price_range='test price_range')
+
+    response = client.get('/meetings/' + str(meeting.id) + '/')
+
+    assert meeting.name in response.content.decode("utf8")
 
 
 @pytest.mark.django_db

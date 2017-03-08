@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
-from moim.models import Meeting, Applier
+from moim.models import Meeting, Applier, User
 import datetime
 import pytest
 
@@ -49,3 +48,10 @@ def test_cannot_save_wrong_format_phone_number_applier():
     with pytest.raises(ValidationError):
         applier3.save()
         applier3.full_clean()
+
+
+@pytest.mark.django_db
+def test_save_user():
+    User.objects.create(email='test email', password='test password', gender='M',
+                        nickname='test nickname', phone_number='01024231412')
+    User.objects.get(email='test email')

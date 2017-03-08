@@ -1,6 +1,6 @@
 import pytest
 import datetime
-from moim.models import Meeting, Applier
+from moim.models import Meeting, Applier, User
 
 
 @pytest.mark.django_db
@@ -52,7 +52,7 @@ def test_homepage_view_multiple_cards(client):
 @pytest.mark.django_db
 def test_save_applier_info_after_applying_post_request(client):
     start_time = datetime.datetime.now()
-    meeting = Meeting.objects.create(maker='test maker', name='test name1', place='test place', start_time=start_time,
+    meeting = Meeting.objects.create(maker='test maker', name='test name', place='test place', start_time=start_time,
                                      distance_near_univ='test distance_near_univ', price_range='test price_range')
 
     client.post('/meetings/%d/apply/' % (meeting.id,),
@@ -72,6 +72,46 @@ def test_redirect_to_homepage_after_applying_post_request(client):
                            data={'name': 'test name',
                                  'phone_number': '010-1111-1111',
                                  'gender': 'M'})
+
+    assert response.status_code == 302
+    assert '/' == response.url
+
+
+@pytest.mark.django_db
+def test_specific_moim_return_correct_meeting(client):
+    start_time = datetime.datetime.now()
+    meeting = Meeting.objects.create(maker='test maker', name='test name', place='test place', start_time=start_time,
+                                     distance_near_univ='test distance_near_univ', price_range='test price_range')
+
+    response = client.get('/meetings/' + str(meeting.id) + '/')
+
+    assert meeting.name in response.content.decode("utf8")
+
+
+@pytest.mark.django_db
+def test_save_user_info_after_sign_up_post_request(client):
+    client.post('/signup/',
+                data={'nickname': 'test nickname',
+                      'phone1': '010',
+                      'phone2': '1111',
+                      'phone3': '2222',
+                      'gender': 'M',
+                      'email': 'test@naver.com',
+                      'password': '12341234'})
+
+    User.objects.get(email='test@naver.com')
+
+
+@pytest.mark.django_db
+def test_redirect_to_homepage_after_sign_up_post_request(client):
+    response = client.post('/signup/',
+                           data={'nickname': 'test nickname',
+                                 'phone1': '010',
+                                 'phone2': '1111',
+                                 'phone3': '2222',
+                                 'gender': 'M',
+                                 'email': 'test@naver.com',
+                                 'password': '12341234'})
 
     assert response.status_code == 302
     assert '/' == response.url

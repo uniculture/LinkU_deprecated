@@ -102,7 +102,7 @@ def test_first_page_cards_title(browser):
     input_boxs[0].send_keys('김짱구')
 
     # 연락처는 '010-1234-5678' 로 입력하고
-    input_boxs[1].send_keys('010-1234-5678')
+    input_boxs[1].send_keys('01012345678')
 
     # 성별은 '남성'으로 체크하고
     input_boxs[2].click()
@@ -119,6 +119,51 @@ def test_first_page_cards_title(browser):
 
     # 메인 홈페이지로 이동을 하였다
     assert urljoin(ROOT_URL_DEVELOP, '/') == browser.current_url
+
+
+def test_applying_page_when_user_wrote_wrong_input(browser):
+    # 짱구는 이번에는 첫 번째 모임인 선혁이의 "규카츠 먹을래?" 모임에 참가하기 위해 사이트에 접속한 후 신청하기 버튼을 눌렀다.
+    browser.get(ROOT_URL_DEVELOP)
+    btn_list = browser.find_elements_by_tag_name('button')
+    btn_list[1].click()
+
+    # 짱구는 아무것도 입력하지 않은 상태로 확인 버튼을 눌러본다.
+    apply_button = browser.find_element_by_tag_name('button')
+    apply_button.click()
+
+    # '잘못된입력입니다." 라는 메세지의 팝업창이 뜬다.
+    assert "잘못된입력입니다." in Alert(browser).text
+
+    # 확인 버튼을 눌러서 팝업창을 닫고
+    Alert(browser).accept()
+
+    # 이번에는 이름과 성별을 '김짱구', '남'으로 입력하고,
+    input_boxs = browser.find_elements_by_tag_name('input')
+    input_boxs[0].send_keys('김짱구')
+    input_boxs[2].click()
+
+    # 연락처는 연락처 형식에 맞지 않는 '15152'을 입력해보기로 한다.
+    input_boxs[1].send_keys('15152')
+
+    # 다시 신청 버튼을 누르자
+    apply_button.click()
+
+    # '잘못된입력입니다.' 라는 팝업창이 다시 떴다.
+    assert "잘못된입력입니다." in Alert(browser).text
+
+    # 확인 버튼을 눌러서 팝업창을 닫고
+    Alert(browser).accept()
+
+    # 연락처를 다시 '01011111111'으로 올바르게 입력한 후
+    input_boxs[1].clear()
+    input_boxs[1].send_keys('01011111111')
+
+    # 다시 신청 버튼을 누르자
+    apply_button.click()
+
+    # '신청이완료되었습니다.' 라는 메세지가 표시되고 메인 홈페이지로 이동하였다.
+    assert "신청이완료되었습니다." in Alert(browser).text
+    Alert(browser).accept()
 
 
 def test_specific_page_contents(browser):
